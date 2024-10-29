@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings - Smart Pet Feeder System</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #262626;
+  color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+
+
+.header {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #1E90FF; 
+}
+
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-item {
+  background-color: #3c3c3c;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0 10px;
+  text-decoration: none; 
+  font-family: 'Roboto', sans-serif; 
+  font-weight: 700; 
+}
+
+.nav-item:hover {
+  background-color: #505050;
+  color: #1E90FF; 
+}
+
+
+.section {
+  background-color: #333;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 600px;
+}
+
+.section-header {
+  font-size: 22px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #e75480;
+  font-family: 'Roboto', sans-serif; 
+  font-weight: bold;
+}
+
+.button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  width: calc(100% - 60px);
+  text-align: center;
+  box-shadow: 0 4px #367c39;
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  margin: 10px 0;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-left: 10px;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #76b900;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+
+
+.centered-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.label-text {
+  color: #f0f0f0;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+
+}
+
+
+.button-container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+
+@media (max-width: 600px) {
+  .header, .section {
+    width: 90%;
+  }
+  .nav-item {
+    margin: 5px;
+    padding: 10px;
+  }
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+   .centered-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+
+select:disabled {
+  background-color: #ccc;
+  color: #666;
+}
+
+
+.save-button {
+  background-color: #1E90FF;
+  color: white; 
+  border: none; 
+  padding: 15px 30px; 
+  background-color: #1E90FF;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  width: calc(100% - 60px); 
+  text-align: center;
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  margin: 10px 0;
+  font-family: 'Roboto', sans-serif; 
+  font-weight: bold;
+}
+
+
+.save-button:hover {
+  background-color: #e75480;
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div><label>WELCOME TO SMART PET FEEDER SYSTEM</label></div>
+  <div class="nav">
+    <a href="home.html" class="nav-item">HOME</a>
+    <a href="log.html" class="nav-item">LOG</a>
+    <a href="settings.html" class="nav-item">SETTINGS</a>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-header">SCHEDULED DISPENSING</div>
+  <div class="centered-container">
+    <label class="toggle-switch">
+      <input type="checkbox" id="scheduleToggle" data-related-select="dispenseSchedule">
+      <span class="slider round"></span>
+    </label>
+    <label for="scheduleToggle" class="label-text">Fills plate to 100% everyday at the chosen hour, select hour:</label>
+    <select id="dispenseSchedule" disabled>
+      <option value="06:00">6 AM</option>
+      <option value="07:00">7 AM</option>
+      <option value="08:00">8 AM</option>
+      <option value="09:00">9 AM</option>
+      <option value="10:00">10 AM</option>
+      <option value="11:00">11 AM</option>
+      <option value="12:00">12 PM</option>
+      <option value="13:00">1 PM</option>
+      <option value="14:00">2 PM</option>
+      <option value="15:00">3 PM</option>
+      <option value="16:00">4 PM</option>
+      <option value="17:00">5 PM</option>
+      <option value="18:00">6 PM</option>
+      <option value="19:00">7 PM</option>
+      <option value="20:00">8 PM</option>
+      <option value="21:00">9 PM</option>
+      <option value="22:00">10 PM</option>
+      <option value="23:00">11 PM</option>
+      <option value="00:00">12 AM</option>
+      <option value="01:00">1 AM</option>
+      <option value="02:00">2 AM</option>
+      <option value="03:00">3 AM</option>
+      <option value="04:00">4 AM</option>
+      <option value="05:00">5 AM</option>
+    </select>
+  </div>
+</div>
+
+<!-- <div class="section">
+  <div class="section-header">AUTO AUDIO</div>
+  <div class="centered-container">
+    <label class="toggle-switch">
+      <input type="checkbox" id="audioToggle" data-related-select="defaultAudio">
+      <span class="slider round"></span>
+    </label>
+    <label for="audioToggle" class="label-text">Plays audio whenever motion is detected, select default audio:</label>
+    <select id="defaultAudio" disabled>
+      <option value="0">Come here boi</option>
+            <option value="1">pspspspspspspspsps</option>
+            <option value="2">Message for Chinese cat</option>
+    </select>
+  </div>
+</div> -->
+
+<div class="section">
+  <div class="section-header">AUTO AUDIO</div>
+  <div class="centered-container">
+    <label class="toggle-switch">
+        <input type="checkbox" id="autoLightToggle">
+        <span class="slider round"></span>
+    </label>
+    <label for="defaultLight" class="label-text">Default audio plays automatically when motion is detected</label>
+  </div>
+</div>
+
+<button class="save-button" id="saveSettingsBtn" onclick="saveSettings()">Save Settings</button>
+
+
+<script>
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+    var scheduleToggle = document.getElementById('scheduleToggle');
+    var dispenseSchedule = document.getElementById('dispenseSchedule');
+    scheduleToggle.addEventListener('change', function() {
+        dispenseSchedule.disabled = !this.checked;
+    });
+
+    // var audioToggle = document.getElementById('audioToggle');
+    // var defaultAudio = document.getElementById('defaultAudio');
+    // audioToggle.addEventListener('change', function() {
+    //     defaultAudio.disabled = !this.checked;
+    // });
+
+  
+    function saveSettings() {
+        var autoLightState = document.getElementById('autoLightToggle').checked ? "on" : "off";
+      //   var audioEnabled = document.getElementById('audioToggle').checked ? "on" : "off";
+      //  var selectedAudio = document.getElementById('defaultAudio').value;
+
+        var xhrLight = new XMLHttpRequest();
+        xhrLight.open("GET", "/toggle-light-setting?state=" + autoLightState, true);
+        xhrLight.onreadystatechange = function () {
+            if (xhrLight.readyState === 4) {
+                if (xhrLight.status === 200) {
+                    alert('Light settings saved successfully!');
+                } else {
+                    alert('Failed to save light settings.');
+                }
+            }
+        };
+        xhrLight.send();
+
+        // var xhrAudio = new XMLHttpRequest();
+        // xhrAudio.open("GET", "/toggle-audio-setting?audio=" + selectedAudio + "&enabled=" + audioEnabled, true);
+        // xhrAudio.onreadystatechange = function () {
+        //     if (xhrAudio.readyState === 4) {
+        //         if (xhrAudio.status === 200) {
+        //             alert('Audio settings saved successfully!');
+        //         } else {
+        //             alert('Failed to save audio settings.');
+        //         }
+        //     }
+        // };
+        // xhrAudio.send();
+    }
+
+    document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+});
+
+
+</script>
+
+
+</body>
+</html>

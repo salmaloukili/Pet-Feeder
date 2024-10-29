@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Pet Feeder System</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #262626;
+  color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+.section {
+  background-color: #333;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 600px;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.section-header {
+  font-size: 22px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #e75480;
+  font-family: 'Roboto', sans-serif; 
+  font-weight: bold;
+}
+
+.header {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  color: #1E90FF; 
+}
+
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-item {
+  background-color: #3c3c3c;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0 10px;
+}
+.nav-item:hover {
+  background-color: #505050;
+  color: #1E90FF; 
+}
+
+
+.header label, .nav-item {
+  font-family: 'Roboto', sans-serif; 
+  font-weight: 700;
+  text-decoration: none; 
+}
+
+
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.select-container {
+  display: block;
+  width: 60%;
+  margin: 20px auto;
+}
+
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #76b900;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+
+
+.button {
+  background-color: #1E90FF;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  width: calc(100% - 60px); 
+  text-align: center;
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  font-family: 'Roboto', sans-serif; 
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.button.active {
+  background-color: #f44336;
+  box-shadow: 0 4px #c12f25; 
+}
+
+
+.button-container {
+  margin: 10px auto; 
+  display: flex;
+  width: 70%; 
+  justify-content: space-around;
+  margin-bottom: 20px;
+
+}
+.button:hover {
+  background-color: #e75480;
+}
+   
+.button, .volume-slider-short {
+  width: 80%; 
+  margin: 0 auto; 
+  display: block; 
+}
+
+
+.small-button:hover {
+  background-color: #e75480;
+}
+
+.small-button.active, .small-button:disabled {
+  background-color: #f44336;
+}
+.small-button {
+  background-color: #FFB6C1;
+  color: #00000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.3s;
+  font-family: 'Roboto', sans-serif;
+  flex: none; 
+  margin: 0 10px; 
+  margin-bottom: 10px;
+  font-family: 'Roboto', sans-serif; 
+  font-weight: bold;
+
+}
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.switch .slider:before {
+  height: 20px;
+  width: 20px; 
+}
+
+.switch .slider {
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.switch .slider:before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 7px;
+  bottom: 7px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+
+.volume-control-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0px; 
+  margin-bottom: 10px;
+}
+
+.volume-label {
+  display: inline-block; 
+  margin: 0 5px; 
+  font-size: 16px;
+  color: #f0f0f0;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div>
+        <label>WELCOME TO SMART PET FEEDER SYSTEM</label>
+    </div>
+    <div class="nav">
+        <a href="home.html" class="nav-item">HOME</a>
+        <a href="log.html" class="nav-item">LOG</a>
+        <a href="settings.html" class="nav-item">SETTINGS</a>
+        
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-header"> DISPENSE FOOD</div>
+    <div class="plate-food-level">
+        Plate food level: <span id="plateFoodLevel">... </span>
+        
+        <button class="small-button" onclick="requestWeight()">Update</button>
+    </div>
+
+    <div class="button-container">
+        <button class="button" id="dispenseButton" onclick="toggleDispense()">Start Dispensing</button>
+    </div>
+    <div class="volume-control-wrapper">
+      <button class="small-button" id="thresholdDecrease">-</button>
+      <span class="volume-label">Threshold: <span id="currentThreshold">100</span>%</span>
+      <button class="small-button" id="thresholdIncrease">+</button>
+  </div>
+</div>
+
+<div class="section">
+    <div class="section-header">PLAY AUDIO</div>
+    <div class="select-container">
+        <select id="audioSelect">
+            <option value="0">Come here boi</option>
+            <option value="1">pspspspspspspspsps</option>
+            <option value="2">Message for Chinese cat</option>
+        </select>
+    </div>
+    
+  
+    
+ <div class="volume-control-wrapper">
+  <button class="small-button" id="volumeDecrease">-</button>
+  <span class="volume-label">Volume: <span id="currentVolume">30</span>%</span>
+  <button class="small-button" id="volumeIncrease">+</button>
+</div>
+
+    <div class="button-container">
+        <button class="button" onclick="playAudio()">Play Audio</button>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-header">CONTROL LIGHT</div>
+    <div class="button-container">
+        <label class="switch">
+            <input type="checkbox" onchange="toggleLight()">
+            <span class="slider round"></span>
+        </label>
+    </div>
+</div>
+
+
+
+<script>
+ 
+
+  function playAudio() {
+    const audioSelect = document.querySelector('#audioSelect');
+    const audioIndex = audioSelect.value; 
+
+    fetch(`/play-audio?choice=${audioIndex}`, { method: 'GET' })
+    .then(response => {
+        if(response.ok) {
+            console.log(`Audio play request successful. Index: ${audioIndex}`);
+        } else {
+            throw new Error('Audio play request failed.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+
+  let isDispensing = false;
+
+function toggleDispense() {
+  const dispenseButton = document.getElementById('dispenseButton');
+  isDispensing = !isDispensing;
+  dispenseButton.textContent = isDispensing ? "Stop Dispensing" : "Start Dispensing";
+  dispenseButton.style.backgroundColor = isDispensing ? "#f44336" : "#1E90FF"; 
+
+  const command = isDispensing ? 'start' : 'stop';
+  fetch(`/dispense-food?command=${command}`, { method: 'GET' })
+    .then(response => {
+      if(response.ok) {
+        console.log(`${command.toUpperCase()} dispensing.`);
+      } else {
+        throw new Error(`${command.toUpperCase()} dispensing request failed.`);
+      }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function updateWeight() {
+    fetch('/get-weight')
+        .then(response => response.text())
+        .then(weight => {
+            document.getElementById('plateFoodLevel').innerText = weight + "%";
+        })
+        .catch(error => console.error('Error fetching plate food level:', error));
+}
+
+setInterval(updateWeight, 2000); // Update weight every 2 seconds
+
+
+
+function changeVolume(increase) {
+    let currentVolume = parseInt(document.getElementById('currentVolume').innerText, 10);
+    if (increase) {
+        currentVolume = Math.min(currentVolume + 10, 100); 
+    } else {
+        currentVolume = Math.max(currentVolume - 10, 0); 
+    }
+    document.getElementById('currentVolume').innerText = currentVolume.toString();
+    setVolume(currentVolume); 
+}
+
+
+document.getElementById('volumeIncrease').addEventListener('click', function() { changeVolume(true); });
+document.getElementById('volumeDecrease').addEventListener('click', function() { changeVolume(false); });
+
+function setVolume(volume) {
+    const volumeData = { volume: volume };
+
+    fetch('/set-volume', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(volumeData)
+    })
+    .then(response => {
+        if(response.ok) {
+            console.log(`Volume set to: ${volume}%`);
+        } else {
+            throw new Error('Failed to set volume.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function requestWeight() {
+    fetch('/request-weight', { method: 'GET' })
+      .then(response => {
+        if(response.ok) {
+          console.log("Plate level update request sent.");
+        } else {
+          throw new Error('Plate level update request failed.');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+}
+
+
+function toggleLight() {
+    const lightState = document.querySelector('.switch input[type="checkbox"]').checked ? 'on' : 'off';
+    fetch(`/toggle-light?state=${lightState}`, {
+        method: 'GET'
+    })
+    .then(response => {
+        if(response.ok) {
+            console.log("LED toggle request successful.");
+        } else {
+            throw new Error('Server responded with an error!');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+
+function adjustThreshold(increase) {
+    let endpoint = increase ? '/increase-threshold' : '/decrease-threshold';
+    fetch(endpoint, { method: 'GET' })
+      .then(response => {
+        if(response.ok) {
+          console.log(`${increase ? 'Increase' : 'Decrease'} threshold request successful.`);
+        } else {
+          throw new Error(`${increase ? 'Increase' : 'Decrease'} threshold request failed.`);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+}
+
+
+function changeThreshold(increase) {
+    let currentThreshold = parseInt(document.getElementById('currentThreshold').innerText, 10);
+    if (increase) {
+        currentThreshold = Math.min(currentThreshold + 10, 100); 
+    } else {
+        currentThreshold = Math.max(currentThreshold - 10, 0); 
+    }
+    document.getElementById('currentThreshold').innerText = currentThreshold.toString();
+    
+}
+
+document.getElementById('thresholdIncrease').addEventListener('click', function() { adjustThreshold(true); });
+document.getElementById('thresholdDecrease').addEventListener('click', function() { adjustThreshold(false); });
+document.getElementById('thresholdIncrease').addEventListener('click', function() { changeThreshold(true); });
+document.getElementById('thresholdDecrease').addEventListener('click', function() { changeThreshold(false); });
+
+
+</script>
+
+
+</body>
+</html>
+
+
+
+
