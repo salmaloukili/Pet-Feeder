@@ -1,97 +1,55 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C6 | ESP32-S2 | ESP32-S3 |
-| ----------------- | ----- | -------- | -------- | -------- | -------- | -------- |
+# Smart Pet Feeder
 
-# Captive Portal Example
+A smart, automated pet feeder designed to ensure pets are fed, entertained, and monitored remotely. This system is powered by an ESP32 master node with STM8 slave nodes for handling interactions, feeding, and communication via a web interface.
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+## Table of Contents
+- [Features](#features)
+- [System Architecture](#system-architecture)
+- [Hardware Components](#hardware-components)
+- [Software Components](#software-components)
+- [Setup and Usage](#setup-and-usage)
 
-This example demonstrates a simple captive portal that will redirect all DNS IP questions to point to the softAP and redirect all HTTP requests to the captive portal root page. Triggers captive portal (sign in) pop up on Android, iOS and Windows. Note that the example will not redirect HTTPS requests.
 
-## How to Use Example
+---
 
-Before project configuration and build, be sure to set the correct chip target using `idf.py set-target <chip_name>`.
+## Features
+- **Automated Feeding:** Dispenses food based on set schedules or remote commands.
+- **Pet Interaction:** Includes motion detection and audio playback to engage pets.
+- **Remote Control:** Web interface enables monitoring and interaction from any device.
+- **Low Power Consumption:** Efficient wireless communication via nRF24 for power savings.
 
-### Hardware Required
+## System Architecture
+The system comprises:
+1. **Master Node (ESP32):** Controls the web interface and manages communication with slave nodes.
+2. **Slave Nodes (STM8):** Handle feeding mechanics, motion detection, and audio playback.
+3. **Wireless Communication:** nRF24 module for robust, low-power communication between nodes.
 
-* A development board with ESP32/ESP32-S2/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.)
-* A USB cable for power supply and programming
-* WiFi interface
+## Hardware Components
+- **ESP32-S3**: For web server and master node functions.
+- **STM8S105K4**: Controls slave nodes for feeding and interaction.
+- **nRF24L01**: Wireless communication module.
+- **Motion Sensor (HC-SR501)**: Detects pet presence.
+- **Servo Motor (MG996R)**: Operates food dispenser.
+- **Load Cell (HX711)**: Measures food weight.
+- **DFPlayer Mini MP3 Module**: Plays audio for pet engagement.
+- **Power Supply**: USB-powered with 5V-3.3V step-down regulator.
 
-### Configure the project
+## Software Components
+- **ESP32 Web Server**: Provides an interface for users to monitor and control the feeder.
+- **nRF24 Communication Protocol**: Enables low-power data exchange between nodes.
+- **FreeRTOS on ESP32**: Manages concurrent tasks for seamless operation.
 
-Open the project configuration menu (`idf.py menuconfig`).
+## Setup and Usage
+1. **Hardware Assembly**:
+   - Connect the ESP32 and STM8 modules with the required sensors and actuators as per the system diagram.
+   - Install the nRF24 module for wireless communication.
 
-In the `Example Configuration` menu:
+2. **Software Setup**:
+   - Flash the ESP32 and STM8 with the respective firmware.
+   - Connect to the web server through the ESP32’s Wi-Fi network for initial configuration.
 
-* Set the Wi-Fi configuration.
-    * Set `SoftAP SSID`
-    * Set `SoftAP Password`
-    * Set `Maximal STA connections`
+3. **Usage**:
+   - Use the web interface to set feeding schedules, enable interaction features, and monitor system logs.
 
-### Build and Flash
 
-Build the project and flash it to the board, then run monitor tool to view serial output:
-
-```
-idf.py -p PORT flash monitor
-```
-
-(To exit the serial monitor, type ``Ctrl-]``.)
-
-See the Getting Started Guide for full steps to configure and use ESP-IDF to build projects.
-
-## Example Output
-
-```
-I (733) example: Set up softAP with IP: 192.168.4.1
-I (743) example: wifi_init_softap finished. SSID:'esp32_ssid' password:'esp32_pwd'
-I (753) example: Starting server on port: '80'
-I (753) example: Registering URI handlers
-I (763) example_dns_redirect_server: Socket created
-I (763) example_dns_redirect_server: Socket bound, port 53
-I (773) example_dns_redirect_server: Waiting for data
-I (1873) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1
-I (1873) wifi:station: e8:84:a5:18:8f:80 join, AID=1, bgn, 40U
-I (2203) example: station e8:84:a5:18:8f:80 join, AID=1
-I (2833) example_dns_redirect_server: Received 50 bytes from 192.168.4.2 | DNS reply with len: 66
-I (2843) example_dns_redirect_server: Waiting for data
-I (3043) example_dns_redirect_server: Received 39 bytes from 192.168.4.2 | DNS reply with len: 55
-I (3043) example_dns_redirect_server: Waiting for data
-I (3043) example_dns_redirect_server: Received 42 bytes from 192.168.4.2 | DNS reply with len: 58
-I (3053) example_dns_redirect_server: Waiting for data
-W (3203) wifi:<ba-add>idx:4 (ifx:1, e8:84:a5:18:8f:80), tid:0, ssn:9, winSize:64
-I (3533) example: Redirecting to root
-I (5693) example_dns_redirect_server: Received 37 bytes from 192.168.4.2 | DNS reply with len: 53
-I (5693) example_dns_redirect_server: Waiting for data
-I (5783) example_dns_redirect_server: Received 46 bytes from 192.168.4.2 | DNS reply with len: 62
-I (5783) example_dns_redirect_server: Waiting for data
-I (6303) example_dns_redirect_server: Received 41 bytes from 192.168.4.2 | DNS reply with len: 57
-I (6303) example_dns_redirect_server: Waiting for data
-I (6303) example_dns_redirect_server: Received 41 bytes from 192.168.4.2 | DNS reply with len: 57
-I (6313) example_dns_redirect_server: Waiting for data
-I (6593) example: Redirecting to root
-I (9623) example: Redirecting to root
-I (12913) example: Redirecting to root
-I (13263) example_dns_redirect_server: Received 34 bytes from 192.168.4.2 | DNS reply with len: 50
-I (13273) example_dns_redirect_server: Waiting for data
-I (13273) example_dns_redirect_server: Received 34 bytes from 192.168.4.2 | DNS reply with len: 50
-I (13283) example_dns_redirect_server: Waiting for data
-I (16303) example_dns_redirect_server: Received 32 bytes from 192.168.4.2 | DNS reply with len: 48
-I (16303) example_dns_redirect_server: Waiting for data
-I (18073) example: Redirecting to root
-I (18273) example_dns_redirect_server: Received 34 bytes from 192.168.4.2 | DNS reply with len: 50
-I (18273) example_dns_redirect_server: Waiting for data
-I (18273) example_dns_redirect_server: Received 34 bytes from 192.168.4.2 | DNS reply with len: 50
-I (18283) example_dns_redirect_server: Waiting for data
-I (20683) example_dns_redirect_server: Received 42 bytes from 192.168.4.2 | DNS reply with len: 58
-I (20683) example_dns_redirect_server: Waiting for data
-I (20753) example: Redirecting to root
-I (21323) example: Redirecting to root
-I (22683) example_dns_redirect_server: Received 48 bytes from 192.168.4.2 | DNS reply with len: 64
-I (22693) example_dns_redirect_server: Waiting for data
-I (23443) example_dns_redirect_server: Received 48 bytes from 192.168.4.2 | DNS reply with len: 64
-I (23453) example_dns_redirect_server: Waiting for data
-I (23473) example: Serve root
-I (23503) example_dns_redirect_server: Received 48 bytes from 192.168.4.2 | DNS reply with len: 64
-I (23513) example_dns_redirect_server: Waiting for data
-```
+This project was developed as part of the Electronics and ICT Engineering program at KU Leuven, Group T Leuven Campus.
